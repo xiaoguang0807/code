@@ -62,13 +62,19 @@ int CharDestory(CharStack *s)
 {
 	if(s)
 	{
-		free(s);
+		free(s->base);
 		s = NULL;
-		printf("destory");
 		return 1;
 	}
 	else 
 		return 0;
+}
+int CharStackEmpty(CharStack s)
+{
+    if(s.top == s.base)
+        return 1;
+    else
+        return 0;
 }
 
 

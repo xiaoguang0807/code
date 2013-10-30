@@ -62,13 +62,19 @@ int IntDestory(IntStack *s)
 {
 	if(s)
 	{
-		free(s);
+		free(s->base);
 		s = NULL;
-		printf("destory");
 		return 1;
 	}
 	else
 		return 0;
+}
+int IntEmpty(IntStack s)
+{
+    if(s.base == s.top)
+        return 1;
+    else
+        return 0;
 }
 //main()
 //{

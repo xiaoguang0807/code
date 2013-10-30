@@ -9,15 +9,10 @@
 
 int op(char c)   //判断c是否是操作符
 {
-	char v[]={'(',')','-','+','*','/','#'};
-	int i;
-
-	for(i=0;i<7;i++)
-	{
-		if(c == v[i])
-			return 1;
-	}	
-	return 0;
+	if(c == '('||c == ')'||c == '+'||c == '-'||c =='*'||c =='/'||c == '#')
+    return 1;
+    else
+        return 0;
 }
 
 char Precede(char a,char b) //操作符优先级的比较

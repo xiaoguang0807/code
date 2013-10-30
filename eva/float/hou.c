@@ -1,75 +1,92 @@
 /*************************************************************************
-	> File Name: hou.c
-	> Author: li
-	> Mail: xiaoguang.li.0807@gmail.com 
-	> Created Time: 2013年10月18日 星期五 20时10分31秒
+  > File Name: qian.c
+  > Author: li
+  > Mail: xiaoguang.li.0807@gmail.com 
+  > Created Time: 2013年10月10日 星期四 15时35分39秒
  ************************************************************************/
 
 #include<stdio.h>
-#include"charstack.c"
-#include"intstack.c"
-#include"hanshu.c"
+#include "intstack.c"
+#include "charstack.c"
+#include "hanshu.c"
 
 
 main()
 {
-	CharStack OP;
-	IntStack  NU;
-	char c,a;
-	int f,nu,nu1,nu2,nu3;
-	
-	
-	CharInitStack(&OP);
-	IntInitStack(&NU);
-	CharPush(&OP,'#');
+	float f,m ,k,i;
+	char c,theta;
+	CharStack OPTR;
+
+	CharInitStack(&OPTR);
+	CharPush(&OPTR,'#');
+    k = 1;
 	c = getchar();
-	while(c != '#'||CharGetTop(OP) != '#')
+    if(c == '-')
+    {
+        k = -1;
+        c = getchar();
+    }
+	while(c != '#'||CharGetTop(OPTR) != '#')
 	{
-		if(op(c))
+        if(op(c))
 		{
-			switch(Precede(CharGetTop(OP),c))
+			switch(Precede(CharGetTop(OPTR),c))
 			{
-				case'<':
-					CharPush(&OP,c);
+				case '<':
+				CharPush(&OPTR,c);
+				c = getchar();
+                if(c == '-')
+                {
+                    k = -1;
+                    c = getchar();
+                }
+				break;
+
+				case '=':
+					CharPop(&OPTR);
 					c = getchar();
 					break;
-				case'=':
-					a = CharPop(&OP);
-					c = getchar();
+				case '>':
+					theta = CharPop(&OPTR);
+                    printf("%c ",theta);
 					break;
-				case'>':
-					a = CharPop(&OP);
-					printf("%c ",a);
-					nu2 = IntPop(&NU);
-					if(a == '/'&& nu2 == 0)
-					{
-						printf("错误：出现0为除数");
-						return;
-					}
-					nu1 = IntPop(&NU);
-					nu3 = Operate(nu1,a,nu2);
-					IntPush(&NU,nu3);
-					break;
-			}
+			}//switch
 		}
-		else if(isnum(c))
+		else if(isnum(c)||c == '.')
 		{
 			f = 0;
+			i = 0;
 			while(isnum(c))
 			{
 				c = c - '0';
 				f = f * 10 + c;
 				c = getchar();
 			}
-			IntPush(&NU,f);
-			printf("%d ",f);
-		}
+			if(c == '.')
+			{
+				c = getchar();
+				while(isnum(c))
+				{
+					c = c - '0';
+					f = f * 10 + c;
+					c = getchar();
+					i++;
+				}
+			}
+			for(i;i>0;i--)
+				f = f / 10;
+            f = k * f;
+            printf("%f ",f);
+            k = 1;
+        }
 		else
 			c = getchar();
-	}//while
-	nu = IntPop(&NU);
-	printf(" %d\n",nu);
+	}
+	printf("%c\n",'#');
+	CharDestory(&OPTR);
+
 }
+
 
 
 

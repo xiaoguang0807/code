@@ -32,8 +32,10 @@ Status CharInitStack(CharStack *s)
 
 char CharGetTop(CharStack S)
 {
-	if(S.top == S.base) return ERROR;
-	return *(S.top - 1);
+	if(S.top == S.base)
+            return ERROR;
+    else
+        return *(S.top - 1);
 	
 }//GetTop
 
@@ -62,13 +64,21 @@ int CharDestory(CharStack *s)
 {
 	if(s)
 	{
-		free(s);
+		free(s->base);
 		s = NULL;
-		printf("destory stack success");
+//		printf("destory stack success");
 		return 1;
 	}
 	else
 		return 0;
+}
+
+int CharStackEmpty(CharStack s)
+{
+    if(s.base == s.top)
+        return 1;
+    else
+        return 0;
 }
 //main()
 //{
